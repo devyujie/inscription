@@ -1,0 +1,24 @@
+name: Sync Fork with Upstream
+on:
+  schedule:
+    - cron: '20 0 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "artjay.code@gmail.com"
+          git config --global user.name "yujie"
+
+      - name: Sync with Upstream
+        run: |
+          git remote add upstream https://github.com/vectorisvector/Polaris.git
+          git fetch upstream
+          git checkout main
+          git merge upstream/main
+          git push origin main
